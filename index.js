@@ -1,1 +1,1 @@
-document.addEventListener('dragstart', event => event.preventDefault());
+const sanitizeNoSQL = param => typeof param === 'object' ? JSON.stringify(param).replace(/\$/g, '') : param;
