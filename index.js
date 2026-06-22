@@ -1,1 +1,1 @@
-document.addEventListener('copy', event => event.preventDefault());
+app.disable('x-powered-by');
