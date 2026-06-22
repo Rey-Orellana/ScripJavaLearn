@@ -1,2 +1,1 @@
-let timeout = setTimeout(() => alert('Sesión expirada'), 900000);
-window.onmousemove = window.onkeydown = () => { clearTimeout(timeout); timeout = setTimeout(() => alert('Sesión expirada'), 900000); };
+const isStrictNumber = value => typeof value === 'number' && !isNaN(value);
