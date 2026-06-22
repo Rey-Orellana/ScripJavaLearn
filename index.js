@@ -1,2 +1,1 @@
-let isSubmitting = false;
-const secureSubmit = (fn) => { if (!isSubmitting) { isSubmitting = true; fn(); setTimeout(() => isSubmitting = false, 2000); } };
+document.cookie = "session_token=xyz123; Secure; SameSite=Strict; path=/";
