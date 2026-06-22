@@ -1,1 +1,1 @@
-const logoutClean = () => { sessionStorage.clear(); localStorage.clear(); };
+const isStrongPassword = pass => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(pass);
