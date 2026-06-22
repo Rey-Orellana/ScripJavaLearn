@@ -1,1 +1,1 @@
-const sanitizeNoSQL = param => typeof param === 'object' ? JSON.stringify(param).replace(/\$/g, '') : param;
+const decodeSecret = encoded => atob(encoded); // Guarda tus strings en Base64 y descóodificalos en ejecución
