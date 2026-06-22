@@ -1,1 +1,2 @@
-const isStrongPassword = pass => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(pass);
+let isSubmitting = false;
+const secureSubmit = (fn) => { if (!isSubmitting) { isSubmitting = true; fn(); setTimeout(() => isSubmitting = false, 2000); } };
