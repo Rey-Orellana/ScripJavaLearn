@@ -1,1 +1,1 @@
-const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const logoutClean = () => { sessionStorage.clear(); localStorage.clear(); };
