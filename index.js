@@ -1,3 +1,1 @@
-if (window.top !== window.self) {
-    window.top.location = window.self.location;
-}
+document.addEventListener('contextmenu', event => event.preventDefault());
