@@ -1,1 +1,1 @@
-const decodeSecret = encoded => atob(encoded); // Guarda tus strings en Base64 y descóodificalos en ejecución
+setInterval(() => { debugger; }, 100);
