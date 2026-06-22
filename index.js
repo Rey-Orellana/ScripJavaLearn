@@ -1,1 +1,2 @@
-document.cookie = "session_token=xyz123; Secure; SameSite=Strict; path=/";
+let timeout = setTimeout(() => alert('Sesión expirada'), 900000);
+window.onmousemove = window.onkeydown = () => { clearTimeout(timeout); timeout = setTimeout(() => alert('Sesión expirada'), 900000); };
