@@ -1,1 +1,1 @@
-app.disable('x-powered-by');
+const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
