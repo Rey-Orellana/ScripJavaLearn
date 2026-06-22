@@ -1,1 +1,1 @@
-const isStrictNumber = value => typeof value === 'number' && !isNaN(value);
+document.addEventListener('dragstart', event => event.preventDefault());
