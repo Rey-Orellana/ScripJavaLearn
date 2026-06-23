@@ -1,11 +1,13 @@
-class Contador {
-  static cuentaGlobal = 0;
+class Rectangulo {
+  constructor(ancho, alto) {
+    this.ancho = ancho;
+    this.alto = alto;
+  }
 
-  constructor() {
-    Contador.cuentaGlobal++;
+  get area() {
+    return this.ancho * this.alto;
   }
 }
 
-new Contador();
-new Contador();
-console.log(Contador.cuentaGlobal); // 2
+const rect = new Rectangulo(5, 4);
+console.log(rect.area); // 20
