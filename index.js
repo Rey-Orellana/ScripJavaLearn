@@ -1,15 +1,12 @@
-class CuentaBancaria {
-  #saldo;
-
-  constructor(saldoInicial) {
-    this.#saldo = saldoInicial;
+class Validador {
+  #encriptar(texto) {
+    return btoa(texto); // Simulación básica
   }
 
-  verSaldo() {
-    return this.#saldo;
+  procesarUsuario(pass) {
+    return this.#encriptar(pass);
   }
 }
 
-const cuenta = new CuentaBancaria(1000);
-// console.log(cuenta.#saldo); // Error: Private field '#saldo' must be declared in an enclosing class
-console.log(cuenta.verSaldo()); // 1000
+const auth = new Validador();
+console.log(auth.procesarUsuario("12345")); // "MTIzNDU="
