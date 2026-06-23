@@ -1,11 +1,24 @@
-class Notificador {
-  constructor() { this.suscriptores = []; }
-  suscribir(fn) { this.suscriptores.push(fn); }
-  notificar(datos) { this.suscriptores.forEach(fn => fn(datos)); }
+class Cuenta {
+  constructor(usuario) {
+    this.usuario = usuario;
+  }
 }
 
-const boletin = new Notificador();
-boletin.suscribir(data => console.log(`Lector 1 recibió: ${data}`));
-boletin.suscribir(data => console.log(`Lector 2 recibió: ${data}`));
+const cuentaOriginal = new Cuenta("Carlos");
 
-boletin.notificar("Nueva actualización de JS disponible");
+const cuentaProtegida = new Proxy(cuentaOriginal, {
+  get(target, propiedad) {
+    console.log(`Accediendo a la propiedad: ${propiedad}`);
+    return target[propiedad] || "Propiedad no encontrada";
+  },
+  set(target, propiedad, valor) {
+    if (propiedad === "usuario" && typeof valor !== "string") {
+      throw new TypeError("El usuario debe ser un texto");
+    }
+    target[propiedad] = valor;
+    return true;
+  }
+});
+
+console.log(cuentaProtegida.usuario); // Accediendo a la propiedad: usuario -> Carlos
+cuentaProtegida.usuario = "Sofía"; // Funciona correctamente
