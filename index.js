@@ -1,15 +1,15 @@
-class BaseDeDatos {
-  constructor() {
-    if (this.constructor === BaseDeDatos) {
-      throw new Error("No puedes instanciar una clase abstracta directamente.");
-    }
+class Boton {
+  constructor(texto) {
+    this.texto = texto;
+    // Vinculamos permanentemente el contexto
+    this.hacerClick = this.hacerClick.bind(this);
   }
 
-  conectar() {
-    throw new Error("El método 'conectar()' debe ser implementado.");
+  hacerClick() {
+    console.log(`Click en: ${this.texto}`);
   }
 }
 
-// const db = new BaseDeDatos(); // Error
-class MySQL extends BaseDeDatos {}
-// new MySQL().conectar(); // Error: El método debe ser implementado
+const miBoton = new Boton("Guardar");
+const ejecutar = miBoton.hacerClick;
+ejecutar(); // Click en: Guardar (Sin el bind diría "Click en: undefined")
