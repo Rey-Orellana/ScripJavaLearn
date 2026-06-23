@@ -1,3 +1,12 @@
-const element = new Image();
-Object.defineProperty(element, 'id', { get: () => { console.log('Herramientas de desarrollador detectadas'); } });
-console.log('%c', element);
+class Perro {
+  constructor(nombre) {
+    this.nombre = nombre;
+  }
+
+  ladrar() {
+    return `${this.nombre} dice: ¡Guau!`;
+  }
+}
+
+const miPerro = new Perro("Toby");
+console.log(miPerro.ladrar()); // Toby dice: ¡Guau!
