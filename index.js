@@ -1,16 +1,14 @@
-class Motor {
-  encender() { return "Motor encendido..."; }
-}
+class VehiculoGamaAlta { info() { return "Auto de lujo"; } }
+class VehiculoGamaBaja { info() { return "Auto económico"; } }
 
-class Automovil {
-  constructor() {
-    this.motor = new Motor(); // Composición
-  }
-
-  arrancar() {
-    return this.motor.encender() + " ¡Vámonos!";
+class FabricaVehiculos {
+  crear(tipo) {
+    if (tipo === 'lujo') return new VehiculoGamaAlta();
+    if (tipo === 'economico') return new VehiculoGamaBaja();
+    throw new Error("Tipo no soportado");
   }
 }
 
-const coche = new Automovil();
-console.log(coche.arrancar());
+const fabrica = new FabricaVehiculos();
+const miAutoNuevo = fabrica.crear('lujo');
+console.log(miAutoNuevo.info()); // Auto de lujo
