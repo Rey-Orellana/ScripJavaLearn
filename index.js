@@ -1,14 +1,13 @@
-class VehiculoGamaAlta { info() { return "Auto de lujo"; } }
-class VehiculoGamaBaja { info() { return "Auto económico"; } }
-
-class FabricaVehiculos {
-  crear(tipo) {
-    if (tipo === 'lujo') return new VehiculoGamaAlta();
-    if (tipo === 'economico') return new VehiculoGamaBaja();
-    throw new Error("Tipo no soportado");
+class Configuracion {
+  constructor() {
+    if (Configuracion.instancia) {
+      return Configuracion.instancia;
+    }
+    this.tema = "oscuro";
+    Configuracion.instancia = this;
   }
 }
 
-const fabrica = new FabricaVehiculos();
-const miAutoNuevo = fabrica.crear('lujo');
-console.log(miAutoNuevo.info()); // Auto de lujo
+const config1 = new Configuracion();
+const config2 = new Configuracion();
+console.log(config1 === config2); // true (Son exactamente el mismo objeto)
