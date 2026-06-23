@@ -1,8 +1,11 @@
-class Calculadora {
-  static sumar(a, b) {
-    return a + b;
+class Contador {
+  static cuentaGlobal = 0;
+
+  constructor() {
+    Contador.cuentaGlobal++;
   }
 }
 
-// No se usa "new", se llama directo desde la clase
-console.log(Calculadora.sumar(5, 10)); // 15
+new Contador();
+new Contador();
+console.log(Contador.cuentaGlobal); // 2
