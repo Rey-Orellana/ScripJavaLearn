@@ -1,12 +1,16 @@
-class Validador {
-  #encriptar(texto) {
-    return btoa(texto); // Simulación básica
+class Usuario {
+  #edad;
+
+  set edad(valor) {
+    if (valor < 0) throw new Error("La edad no puede ser negativa");
+    this.#edad = valor;
   }
 
-  procesarUsuario(pass) {
-    return this.#encriptar(pass);
+  get edad() {
+    return this.#edad;
   }
 }
 
-const auth = new Validador();
-console.log(auth.procesarUsuario("12345")); // "MTIzNDU="
+const user = new Usuario();
+user.edad = 30; // Funciona
+// user.edad = -5; // Lanza Error
