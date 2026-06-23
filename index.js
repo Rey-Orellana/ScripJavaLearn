@@ -1,13 +1,15 @@
-class Rectangulo {
-  constructor(ancho, alto) {
-    this.ancho = ancho;
-    this.alto = alto;
+class CuentaBancaria {
+  #saldo;
+
+  constructor(saldoInicial) {
+    this.#saldo = saldoInicial;
   }
 
-  get area() {
-    return this.ancho * this.alto;
+  verSaldo() {
+    return this.#saldo;
   }
 }
 
-const rect = new Rectangulo(5, 4);
-console.log(rect.area); // 20
+const cuenta = new CuentaBancaria(1000);
+// console.log(cuenta.#saldo); // Error: Private field '#saldo' must be declared in an enclosing class
+console.log(cuenta.verSaldo()); // 1000
