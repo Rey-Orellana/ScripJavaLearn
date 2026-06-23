@@ -1,17 +1,11 @@
-class Logger {
-  log(msg) { console.log(` LOG: ${msg}`); }
+class Notificador {
+  constructor() { this.suscriptores = []; }
+  suscribir(fn) { this.suscriptores.push(fn); }
+  notificar(datos) { this.suscriptores.forEach(fn => fn(datos)); }
 }
 
-class ServicioUsuarios {
-  constructor(logger) {
-    this.logger = logger; // El logger es inyectado externamente
-  }
+const boletin = new Notificador();
+boletin.suscribir(data => console.log(`Lector 1 recibió: ${data}`));
+boletin.suscribir(data => console.log(`Lector 2 recibió: ${data}`));
 
-  crear() {
-    this.logger.log("Usuario registrado con éxito");
-  }
-}
-
-const miLogger = new Logger();
-const servicio = new ServicioUsuarios(miLogger);
-servicio.crear();
+boletin.notificar("Nueva actualización de JS disponible");
