@@ -1,15 +1,19 @@
-class Boton {
-  constructor(texto) {
-    this.texto = texto;
-    // Vinculamos permanentemente el contexto
-    this.hacerClick = this.hacerClick.bind(this);
+class Auto {
+  constructor() {
+    this.velocidad = 0;
   }
 
-  hacerClick() {
-    console.log(`Click en: ${this.texto}`);
+  acelerar() {
+    this.velocidad += 10;
+    return this; // Clave para el encadenamiento
+  }
+
+  frenar() {
+    this.velocidad -= 5;
+    return this;
   }
 }
 
-const miBoton = new Boton("Guardar");
-const ejecutar = miBoton.hacerClick;
-ejecutar(); // Click en: Guardar (Sin el bind diría "Click en: undefined")
+const miAuto = new Auto();
+miAuto.acelerar().acelerar().frenar();
+console.log(miAuto.velocidad); // 15
