@@ -1,15 +1,14 @@
-class Animal {
-  constructor(especie) {
-    this.especie = especie;
+class Ave {
+  volar() {
+    return "El ave está volando";
   }
 }
 
-class Gato extends Animal {
-  constructor(nombre) {
-    super("Felino"); // Llama al constructor de Animal
-    this.nombre = nombre;
+class Pinguino extends Ave {
+  volar() {
+    return "Los pingüinos no pueden volar, pero nadan excelente";
   }
 }
 
-const miGato = new Gato("Michi");
-console.log(miGato.especie); // Felino
+const pingu = new Pinguino();
+console.log(pingu.volar());
