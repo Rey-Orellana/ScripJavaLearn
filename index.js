@@ -1,13 +1,11 @@
-class Configuracion {
-  constructor() {
-    if (Configuracion.instancia) {
-      return Configuracion.instancia;
+function crearClaseEntidad(nombrePropiedad) {
+  return class {
+    constructor(valor) {
+      this[nombrePropiedad] = valor;
     }
-    this.tema = "oscuro";
-    Configuracion.instancia = this;
-  }
+  };
 }
 
-const config1 = new Configuracion();
-const config2 = new Configuracion();
-console.log(config1 === config2); // true (Son exactamente el mismo objeto)
+const Producto = crearClaseEntidad("precio");
+const tv = new Producto(500);
+console.log(tv.precio); // 500
