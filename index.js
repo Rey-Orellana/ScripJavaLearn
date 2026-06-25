@@ -1,7 +1,7 @@
-const mongoSanitize = require('express-mongo-sanitize');
-const express = require('express');
-const app = express();
-
-app.use(express.json());
-// Busca y elimina cualquier "$" o "." de los inputs del usuario
-app.use(mongoSanitize());
+app.use((req, res, next) => {
+    res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; script-src 'self' https://apis.google.com;"
+    );
+    next();
+});
