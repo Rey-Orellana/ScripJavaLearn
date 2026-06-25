@@ -1,15 +1,26 @@
-// 1. CREATE (Crear)
-let tareas = ['Aprender JS'];
-tareas.push('Practicar CRUD'); 
-console.log('Después de Create:', tareas);
+let videojuegos = [];
 
-// 2. READ (Leer)
-console.log('Leyendo primera tarea:', tareas[0]);
+// C - Create
+function agregarJuego(id, titulo, genero) {
+    videojuegos.push({ id, titulo, genero });
+}
+// R - Read
+function listarJuegos() {
+    console.log('--- Lista de Juegos ---', videojuegos);
+}
+// U - Update
+function actualizarGenero(id, nuevoGenero) {
+    let juego = videojuegos.find(j => j.id === id);
+    if (juego) juego.genero = nuevoGenero;
+}
+// D - Delete
+function eliminarJuego(id) {
+    videojuegos = videojuegos.filter(j => j.id !== id);
+}
 
-// 3. UPDATE (Actualizar)
-tareas[0] = 'Masterizar JS';
-console.log('Después de Update:', tareas);
-
-// 4. DELETE (Eliminar)
-tareas.splice(1, 1); // Elimina 1 elemento desde la posición 1
-console.log('Después de Delete:', tareas);
+// Prueba
+agregarJuego(1, 'Zelda', 'Aventura');
+agregarJuego(2, 'Doom', 'Shooter');
+actualizarGenero(1, 'RPG de Aventura');
+eliminarJuego(2);
+listarJuegos();
