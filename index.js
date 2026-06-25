@@ -1,27 +1,27 @@
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+// Creador de estado inmutable (Factory pattern)
+const crearStoreCRUD = () => {
+    let estado = []; // Privado, no accesible desde fuera directamente
 
-// READ (GET)
-async function obtenerPosts() {
-    const res = await fetch(`${API_URL}?_limit=2`);
-    const data = await res.json();
-    console.log('Posts obtenidos:', data);
-}
+    return {
+        create: (item) => {
+            estado = [...estado, { ...item, creadoEn: new Date() }];
+        },
+        read: () => Object.freeze([...estado]), // Devuelve copia congelada (inmutable)
+        update: (id, updates) => {
+            estado = estado.map(item => item.id === id ? { ...item, ...updates } : item);
+        },
+        delete: (id) => {
+            estado = estado.filter(item => item.id !== id);
+        }
+    };
+};
 
-// CREATE (POST)
-async function crearPost() {
-    const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'Nuevo Post', body: 'Contenido', userId: 1 })
-    });
-    console.log('Post Creado (Respuesta servidor):', await res.json());
-}
+// Inicialización del Store
+const tareasStore = crearStoreCRUD();
 
-// DELETE (DELETE)
-async function eliminarPost(id) {
-    const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-    console.log(`Status de eliminación del id ${id}:`, res.status); // 200 significa OK
-}
+tareasStore.create({ id: 't1', desc: 'Aprender patrones de diseño' });
+tareasStore.create({ id: 't2', desc: 'Ir al gimnasio' });
+tareasStore.update('t1', { desc: 'Aprender patrones de diseño en JS' });
+tareasStore.delete('t2');
 
-// Ejecución
-obtenerPosts().then(crearPost).then(() => eliminarPost(1));
+console.log('Estado final protegido:', tareasStore.read());
