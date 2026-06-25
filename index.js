@@ -1,5 +1,7 @@
+const mongoSanitize = require('express-mongo-sanitize');
 const express = require('express');
 const app = express();
 
-// Elimina la cabecera X-Powered-By: Express
-app.disable('x-powered-by');
+app.use(express.json());
+// Busca y elimina cualquier "$" o "." de los inputs del usuario
+app.use(mongoSanitize());
