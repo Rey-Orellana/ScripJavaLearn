@@ -1,26 +1,27 @@
-const inventario = [{ id: 1, item: 'Laptop', stock: 10 }];
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-// Función simulada de actualización en servidor externo
-const simularUpdateAPI = async (id, nuevoStock) => {
-    if (nuevoStock < 0) throw new Error('Stock no puede ser negativo');
-    
-    // Simula retraso de red
-    return new Promise((resolve) => setTimeout(() => {
-        let art = inventario.find(i => i.id === id);
-        if (art) art.stock = nuevoStock;
-        resolve('Actualizado en el servidor');
-    }, 1200));
-};
-
-async function ejecutarFlujoCRUD() {
-    try {
-        console.log('Intentando actualizar stock...');
-        const respuesta = await simularUpdateAPI(1, 15);
-        console.log('Resultado API:', respuesta);
-        console.log('Inventario final:', inventario);
-    } catch (error) {
-        console.error('Surgió un problema:', error.message);
-    }
+// READ (GET)
+async function obtenerPosts() {
+    const res = await fetch(`${API_URL}?_limit=2`);
+    const data = await res.json();
+    console.log('Posts obtenidos:', data);
 }
 
-ejecutarFlujoCRUD();
+// CREATE (POST)
+async function crearPost() {
+    const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'Nuevo Post', body: 'Contenido', userId: 1 })
+    });
+    console.log('Post Creado (Respuesta servidor):', await res.json());
+}
+
+// DELETE (DELETE)
+async function eliminarPost(id) {
+    const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+    console.log(`Status de eliminación del id ${id}:`, res.status); // 200 significa OK
+}
+
+// Ejecución
+obtenerPosts().then(crearPost).then(() => eliminarPost(1));
