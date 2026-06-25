@@ -1,9 +1,9 @@
-app.use(session({
-    secret: 'un_secreto_muy_fuerte_123',
-    cookie: {
-        httpOnly: true, // Bloquea acceso desde JavaScript (Mitiga XSS)
-        secure: true,   // Solo se envía a través de HTTPS
-        sameSite: 'strict', // Previene ataques CSRF
-        maxAge: 3600000 // 1 hora de expiración
-    }
-}));
+const rateLimit = require('express-rate-limit');
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // Ventana de 15 minutos
+    max: 5, // Máximo 5 intentos de login por IP
+    message: 'Demasiados intentos de inicio de sesión. Intenta en 15 minutos.'
+});
+
+app.use('/api/login', loginLimiter);
