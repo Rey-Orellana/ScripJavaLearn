@@ -1,19 +1,26 @@
-const KEY_STORAGE = 'mis_notas';
+const dbEmpleados = [];
 
-// Guardar/Crear
-function guardarNotas(notas) {
-    localStorage.setItem(KEY_STORAGE, JSON.stringify(notas));
-}
+const crearEmpleado = (empleado) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (!empleado.nombre) reject('Nombre requerido');
+            dbEmpleados.push(empleado);
+            resolve('Empleado contratado con éxito');
+        }, 1000);
+    });
+};
 
-// Leer
-function obtenerNotas() {
-    const notas = localStorage.getItem(KEY_STORAGE);
-    return notas ? JSON.parse(notas) : [];
-}
+const mostrarEmpleados = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(dbEmpleados), 500);
+    });
+};
 
-// Flujo de actualización rápido
-let notasActuales = obtenerNotas();
-notasActuales.push({ id: 1, texto: 'Comprar leche' });
-guardarNotas(notasActuales);
-
-console.log('Notas desde LocalStorage:', obtenerNotas());
+// Uso con promesas
+crearEmpleado({ id: 101, nombre: 'Lucía' })
+    .then(msg => {
+        console.log(msg);
+        return mostrarEmpleados();
+    })
+    .then(datos => console.log('DB actual:', datos))
+    .catch(err => console.error(err));
