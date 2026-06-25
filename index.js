@@ -1,9 +1,10 @@
-const rateLimit = require('express-rate-limit');
+const DOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
 
-const loginLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // Ventana de 15 minutos
-    max: 5, // Máximo 5 intentos de login por IP
-    message: 'Demasiados intentos de inicio de sesión. Intenta en 15 minutos.'
-});
+const comentarioDelUsuario = "<script>alert('hackeado')</script> Excelente post!";
+// Limpia el código malicioso
+const comentarioSeguro = purify.sanitize(comentarioDelUsuario); 
 
-app.use('/api/login', loginLimiter);
+console.log(comentarioSeguro); // Resultado: " Excelente post!"
