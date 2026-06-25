@@ -1,7 +1,12 @@
-const hpp = require('hpp');
-const express = require('express');
-const app = express();
+const { doubleCsrf } = require("csrf-csrf");
 
-app.use(express.urlencoded({ extended: true }));
-// Si detecta parámetros repetidos, los ignora y se queda solo con el último
-app.use(hpp());
+const { doubleCsrfProtection } = doubleCsrf({
+    cookieName: "x-csrf-token",
+    secret: "secreto_super_seguro_para_csrf",
+    cookieOptions: { httpOnly: true, secure: true, sameSite: "lax" }
+});
+
+// Middleware aplicado a rutas mutables (POST, PUT, DELETE)
+app.post('/api/transferir-dinero', doubleCsrfProtection, (req, res) => {
+    res.send("Transferencia segura completada");
+});
