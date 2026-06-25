@@ -1,10 +1,9 @@
-const DOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
-const window = new JSDOM('').window;
-const purify = DOMPurify(window);
+const bcrypt = require('bcrypt');
 
-const comentarioDelUsuario = "<script>alert('hackeado')</script> Excelente post!";
-// Limpia el código malicioso
-const comentarioSeguro = purify.sanitize(comentarioDelUsuario); 
-
-console.log(comentarioSeguro); // Resultado: " Excelente post!"
+async function registrarUsuario(passwordPlana) {
+    const saltRounds = 12; // Factor de costo/lentitud del algoritmo
+    const passwordHasheada = await bcrypt.hash(passwordPlana, saltRounds);
+    
+    // Guardar `passwordHasheada` en la base de datos
+    return passwordHasheada;
+}
