@@ -1,7 +1,9 @@
-// MALO: `SELECT * FROM users WHERE email = '${req.body.email}'` (Vulnerable)
-
-// BUENO: Valores parametrizados
-const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-db.execute(query, [req.body.email, req.body.password], (err, results) => {
-    // El motor de la BD trata los inputs estrictamente como datos, no como código
-});
+app.use(session({
+    secret: 'un_secreto_muy_fuerte_123',
+    cookie: {
+        httpOnly: true, // Bloquea acceso desde JavaScript (Mitiga XSS)
+        secure: true,   // Solo se envía a través de HTTPS
+        sameSite: 'strict', // Previene ataques CSRF
+        maxAge: 3600000 // 1 hora de expiración
+    }
+}));
