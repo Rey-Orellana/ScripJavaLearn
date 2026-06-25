@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
+const cors = require('cors');
 
-async function registrarUsuario(passwordPlana) {
-    const saltRounds = 12; // Factor de costo/lentitud del algoritmo
-    const passwordHasheada = await bcrypt.hash(passwordPlana, saltRounds);
-    
-    // Guardar `passwordHasheada` en la base de datos
-    return passwordHasheada;
-}
+const corsOptions = {
+    origin: 'https://mi-frontend-seguro.com', // Solo este dominio puede acceder
+    methods: ['GET', 'POST'],
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
