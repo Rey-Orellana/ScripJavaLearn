@@ -1,33 +1,25 @@
-import Dexie from 'dexie';
-
-const db = new Dexie('InventoryDatabase');
-db.version(1).stores({
-  items: '$$id, name, quantity'
-});
-
-export const InventoryCRUD = {
-  async create(item) {
-    const id = await db.items.add(item);
-    return { id, ...item };
-  },
-
-  async read(id = null) {
-    if (id) {
-      const item = await db.items.get(id);
-      if (!item) throw new Error("Item no encontrado");
-      return item;
-    }
-    return db.items.toArray();
-  },
-
-  async update(id, updatedFields) {
-    const updated = await db.items.update(id, updatedFields);
-    if (!updated) throw new Error("No se pudo actualizar, ID no encontrado");
-    return this.read(id);
-  },
-
-  async delete(id) {
-    await db.items.delete(id);
-    return true;
+export const crudReducer = (state, action) => {
+  switch (action.type) {
+    case "CREATE":
+      return [...state, action.payload];
+      
+    case "READ_ALL":
+      return action.payload; // Asumiendo payload inicial o fetched
+      
+    case "UPDATE":
+      return state.map(item => 
+        item.id === action.payload.id ? { ...item, ...action.payload.data } : item
+      );
+      
+    case "DELETE":
+      return state.filter(item => item.id !== action.payload);
+      
+    default:
+      return state;
   }
 };
+
+// Ejemplo de dispatchers:
+// dispatch({ type: "CREATE", payload: { id: 1, name: "Admin" } });
+// dispatch({ type: "UPDATE", payload: { id: 1, data: { name: "SuperAdmin" } } });
+// dispatch({ type: "DELETE", payload: 1 });
