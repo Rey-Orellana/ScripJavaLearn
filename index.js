@@ -1,33 +1,33 @@
-import { db } from "./firebase-config.js"; 
-import { collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import Dexie from 'dexie';
 
-const COLLECTION_NAME = "customers";
+const db = new Dexie('InventoryDatabase');
+db.version(1).stores({
+  items: '$$id, name, quantity'
+});
 
-export const FirestoreCRUD = {
-  async create(data) {
-    const docRef = await addDoc(collection(db, COLLECTION_NAME), data);
-    return { id: docRef.id, ...data };
+export const InventoryCRUD = {
+  async create(item) {
+    const id = await db.items.add(item);
+    return { id, ...item };
   },
 
   async read(id = null) {
     if (id) {
-      const docSnap = await getDoc(doc(db, COLLECTION_NAME, id));
-      if (!docSnap.exists()) throw new Error("Documento no existe");
-      return { id: docSnap.id, ...docSnap.data() };
+      const item = await db.items.get(id);
+      if (!item) throw new Error("Item no encontrado");
+      return item;
     }
-    const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return db.items.toArray();
   },
 
-  async update(id, data) {
-    const docRef = doc(db, COLLECTION_NAME, id);
-    await updateDoc(docRef, data);
-    return { id, ...data };
+  async update(id, updatedFields) {
+    const updated = await db.items.update(id, updatedFields);
+    if (!updated) throw new Error("No se pudo actualizar, ID no encontrado");
+    return this.read(id);
   },
 
   async delete(id) {
-    const docRef = doc(db, COLLECTION_NAME, id);
-    await deleteDoc(docRef);
-    return id;
+    await db.items.delete(id);
+    return true;
   }
 };
