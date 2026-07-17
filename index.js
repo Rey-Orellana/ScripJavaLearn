@@ -1,30 +1,51 @@
-class ApiClient {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
-  }
+import mongoose from 'mongoose';
 
-  async _request(endpoint, options = {}) {
-    const response = await fetch(`${this.baseURL}${endpoint}`, {
-      headers: { "Content-Type": "application/json", ...options.headers },
-      ...options,
-    });
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-  }
+const TaskSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  completed: { type: Boolean, default: false }
+}, { timestamps: true });
 
-  create(endpoint, data) {
-    return this._request(endpoint, { method: "POST", body: JSON.stringify(data) });
-  }
+const Task = mongoose.model('Task', TaskSchema);
 
-  read(endpoint, id = "") {
-    return this._request(`${endpoint}/${id}`);
-  }
+export const TaskController = {
+  async create(req, res) {
+    try {
+      const task = new Task(req.body);
+      await task.save();
+      res.status(201).json(task);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  },
 
-  update(endpoint, id, data) {
-    return this._request(`${endpoint}/${id}`, { method: "PUT", body: JSON.stringify(data) });
-  }
+  async read(req, res) {
+    try {
+      const { id } = req.params;
+      const data = id ? await Task.findById(id) : await Task.find();
+      if (id && !data) return res.status(404).json({ error: "No encontrado" });
+      res.status(200).json(data);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
 
-  delete(endpoint, id) {
-    return this._request(`${endpoint}/${id}`, { method: "DELETE" });
+  async update(req, res) {
+    try {
+      const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+      if (!task) return res.status(404).json({ error: "No encontrado" });
+      res.status(200).json(task);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      const task = await Task.findByIdAndDelete(req.params.id);
+      if (!task) return res.status(404).json({ error: "No encontrado" });
+      res.status(204).send();
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   }
-}
+};
