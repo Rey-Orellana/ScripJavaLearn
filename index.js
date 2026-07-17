@@ -1,28 +1,33 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { db } from "./firebase-config.js"; 
+import { collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";
 
-export const ProductService = {
+const COLLECTION_NAME = "customers";
+
+export const FirestoreCRUD = {
   async create(data) {
-    return prisma.product.create({ data });
+    const docRef = await addDoc(collection(db, COLLECTION_NAME), data);
+    return { id: docRef.id, ...data };
   },
 
   async read(id = null) {
     if (id) {
-      return prisma.product.findUniqueOrThrow({ where: { id: Number(id) } });
+      const docSnap = await getDoc(doc(db, COLLECTION_NAME, id));
+      if (!docSnap.exists()) throw new Error("Documento no existe");
+      return { id: docSnap.id, ...docSnap.data() };
     }
-    return prisma.product.findMany();
+    const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   },
 
   async update(id, data) {
-    return prisma.product.update({
-      where: { id: Number(id) },
-      data,
-    });
+    const docRef = doc(db, COLLECTION_NAME, id);
+    await updateDoc(docRef, data);
+    return { id, ...data };
   },
 
   async delete(id) {
-    return prisma.product.delete({
-      where: { id: Number(id) },
-    });
+    const docRef = doc(db, COLLECTION_NAME, id);
+    await deleteDoc(docRef);
+    return id;
   }
 };
