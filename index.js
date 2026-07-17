@@ -1,30 +1,35 @@
-class UserService {
-  #users = new Map();
+const LocalStorageCRUD = {
+  _getKey(id) {
+    return `item_${id}`;
+  },
 
-  create(user) {
-    if (!user.email) throw new Error("El email es obligatorio");
-    const id = crypto.randomUUID();
-    const newUser = { id, ...user, createdAt: new Date() };
-    this.#users.set(id, newUser);
-    return newUser;
-  }
+  create(id, data) {
+    if (localStorage.getItem(this._getKey(id))) {
+      throw new Error("El registro ya existe.");
+    }
+    const payload = JSON.stringify({ ...data, createdAt: Date.now() });
+    localStorage.setItem(this._getKey(id), payload);
+    return { id, ...data };
+  },
 
   read(id) {
-    if (!id) return Array.from(this.#users.values());
-    const user = this.#users.get(id);
-    if (!user) throw new Error(`Usuario con ID ${id} no encontrado`);
-    return user;
-  }
+    const data = localStorage.getItem(this._getKey(id));
+    if (!data) throw new Error("Registro no encontrado.");
+    return JSON.parse(data);
+  },
 
   update(id, updatedData) {
-    const user = this.read(id);
-    const updatedUser = { ...user, ...updatedData, updatedAt: new Date() };
-    this.#users.set(id, updatedUser);
-    return updatedUser;
-  }
+    const current = this.read(id);
+    const payload = JSON.stringify({ ...current, ...updatedData, updatedAt: Date.now() });
+    localStorage.setItem(this._getKey(id), payload);
+    return JSON.parse(payload);
+  },
 
   delete(id) {
-    this.read(id); // Valida si existe
-    return this.#users.delete(id);
+    if (!localStorage.getItem(this._getKey(id))) {
+      throw new Error("Registro inexistente.");
+    }
+    localStorage.removeItem(this._getKey(id));
+    return true;
   }
-}
+};
