@@ -1,35 +1,30 @@
-const LocalStorageCRUD = {
-  _getKey(id) {
-    return `item_${id}`;
-  },
-
-  create(id, data) {
-    if (localStorage.getItem(this._getKey(id))) {
-      throw new Error("El registro ya existe.");
-    }
-    const payload = JSON.stringify({ ...data, createdAt: Date.now() });
-    localStorage.setItem(this._getKey(id), payload);
-    return { id, ...data };
-  },
-
-  read(id) {
-    const data = localStorage.getItem(this._getKey(id));
-    if (!data) throw new Error("Registro no encontrado.");
-    return JSON.parse(data);
-  },
-
-  update(id, updatedData) {
-    const current = this.read(id);
-    const payload = JSON.stringify({ ...current, ...updatedData, updatedAt: Date.now() });
-    localStorage.setItem(this._getKey(id), payload);
-    return JSON.parse(payload);
-  },
-
-  delete(id) {
-    if (!localStorage.getItem(this._getKey(id))) {
-      throw new Error("Registro inexistente.");
-    }
-    localStorage.removeItem(this._getKey(id));
-    return true;
+class ApiClient {
+  constructor(baseURL) {
+    this.baseURL = baseURL;
   }
-};
+
+  async _request(endpoint, options = {}) {
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      headers: { "Content-Type": "application/json", ...options.headers },
+      ...options,
+    });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+  }
+
+  create(endpoint, data) {
+    return this._request(endpoint, { method: "POST", body: JSON.stringify(data) });
+  }
+
+  read(endpoint, id = "") {
+    return this._request(`${endpoint}/${id}`);
+  }
+
+  update(endpoint, id, data) {
+    return this._request(`${endpoint}/${id}`, { method: "PUT", body: JSON.stringify(data) });
+  }
+
+  delete(endpoint, id) {
+    return this._request(`${endpoint}/${id}`, { method: "DELETE" });
+  }
+}
