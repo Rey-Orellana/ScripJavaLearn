@@ -1,16 +1,15 @@
-class Persona {
-    constructor(nombre = "Sin nombre", edad = 0) {
+class Empleado {
+    constructor(nombre, sueldo) {
         this.nombre = nombre;
-        this.edad = edad;
+        this.sueldo = sueldo;
     }
 
-    mostrar() {
-        console.log(`${this.nombre} - ${this.edad} años`);
+    aumentarSueldo(porcentaje) {
+        this.sueldo += this.sueldo * porcentaje / 100;
     }
 }
 
-const p1 = new Persona();
-const p2 = new Persona("Luis", 30);
+const e = new Empleado("Pedro", 5000);
+e.aumentarSueldo(10);
 
-p1.mostrar();
-p2.mostrar();
+console.log(e);
