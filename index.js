@@ -1,12 +1,20 @@
-class Calculadora {
+class Producto {
 
-    static sumar(a, b) {
-        return a + b;
+    constructor(nombre) {
+        this._nombre = nombre;
     }
 
-    static restar(a, b) {
-        return a - b;
+    get nombre() {
+        return this._nombre;
+    }
+
+    set nombre(valor) {
+        this._nombre = valor;
     }
 }
 
-console.log(Calculadora.sumar(8, 2));
+const p = new Producto("Laptop");
+console.log(p.nombre);
+
+p.nombre = "Monitor";
+console.log(p.nombre);
