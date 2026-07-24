@@ -1,26 +1,15 @@
-class Vehiculo {
+class Persona {
 
-    mover() {
-        console.log("El vehículo se mueve");
+    constructor(nombre, edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    toString() {
+        return `${this.nombre} (${this.edad})`;
     }
 }
 
-class Automovil extends Vehiculo {
+const persona = new Persona("Laura", 22);
 
-    conducir() {
-        console.log("Conduciendo automóvil");
-    }
-}
-
-class Taxi extends Automovil {
-
-    cobrar() {
-        console.log("Cobrando carrera");
-    }
-}
-
-const taxi = new Taxi();
-
-taxi.mover();
-taxi.conducir();
-taxi.cobrar();
+console.log(persona.toString());
