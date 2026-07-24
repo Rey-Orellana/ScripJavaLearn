@@ -1,29 +1,18 @@
-class Producto {
+class BaseDatos {
 
-    constructor(nombre, precio) {
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-}
-
-class Carrito {
+    static instancia = null;
 
     constructor() {
-        this.productos = [];
-    }
+        if (BaseDatos.instancia) {
+            return BaseDatos.instancia;
+        }
 
-    agregar(producto) {
-        this.productos.push(producto);
-    }
-
-    total() {
-        return this.productos.reduce((suma, p) => suma + p.precio, 0);
+        this.conexion = "Conectado";
+        BaseDatos.instancia = this;
     }
 }
 
-const carrito = new Carrito();
+const db1 = new BaseDatos();
+const db2 = new BaseDatos();
 
-carrito.agregar(new Producto("Mouse", 80));
-carrito.agregar(new Producto("Teclado", 150));
-
-console.log(carrito.total());
+console.log(db1 === db2);
