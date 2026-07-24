@@ -1,21 +1,16 @@
-class Profesor {
-    constructor(nombre) {
+class Persona {
+    constructor(nombre = "Sin nombre", edad = 0) {
         this.nombre = nombre;
-    }
-}
-
-class Curso {
-    constructor(nombre, profesor) {
-        this.nombre = nombre;
-        this.profesor = profesor;
+        this.edad = edad;
     }
 
     mostrar() {
-        console.log(`${this.nombre} es impartido por ${this.profesor.nombre}`);
+        console.log(`${this.nombre} - ${this.edad} años`);
     }
 }
 
-const profesor = new Profesor("Carlos");
-const curso = new Curso("JavaScript", profesor);
+const p1 = new Persona();
+const p2 = new Persona("Luis", 30);
 
-curso.mostrar();
+p1.mostrar();
+p2.mostrar();
