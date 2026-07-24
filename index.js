@@ -1,20 +1,21 @@
-class Persona {
+class Profesor {
     constructor(nombre) {
         this.nombre = nombre;
     }
 }
 
-class Estudiante extends Persona {
-
-    constructor(nombre, carrera) {
-        super(nombre);
-        this.carrera = carrera;
+class Curso {
+    constructor(nombre, profesor) {
+        this.nombre = nombre;
+        this.profesor = profesor;
     }
 
     mostrar() {
-        console.log(`${this.nombre} estudia ${this.carrera}`);
+        console.log(`${this.nombre} es impartido por ${this.profesor.nombre}`);
     }
 }
 
-const estudiante = new Estudiante("Ana", "Ingeniería");
-estudiante.mostrar();
+const profesor = new Profesor("Carlos");
+const curso = new Curso("JavaScript", profesor);
+
+curso.mostrar();
