@@ -1,15 +1,49 @@
-class Persona {
-    constructor(nombre, edad) {
-        this.nombre = nombre;
-        this.edad = edad;
+class Libro {
+    constructor(titulo, autor) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.disponible = true;
     }
 
-    esMayorQue(otraPersona) {
-        return this.edad > otraPersona.edad;
+    prestar() {
+        if (this.disponible) {
+            this.disponible = false;
+            console.log(`${this.titulo} ha sido prestado.`);
+        } else {
+            console.log(`${this.titulo} no está disponible.`);
+        }
+    }
+
+    devolver() {
+        this.disponible = true;
+        console.log(`${this.titulo} ha sido devuelto.`);
     }
 }
 
-const persona1 = new Persona("Juan", 30);
-const persona2 = new Persona("Pedro", 25);
+class Biblioteca {
+    constructor() {
+        this.libros = [];
+    }
 
-console.log(persona1.esMayorQue(persona2)); // true
+    agregarLibro(libro) {
+        this.libros.push(libro);
+    }
+
+    mostrarLibros() {
+        this.libros.forEach(libro => {
+            console.log(`${libro.titulo} - ${libro.autor} (${libro.disponible ? "Disponible" : "Prestado"})`);
+        });
+    }
+}
+
+const biblioteca = new Biblioteca();
+
+const libro1 = new Libro("Clean Code", "Robert C. Martin");
+const libro2 = new Libro("JavaScript", "Eloquent JavaScript");
+
+biblioteca.agregarLibro(libro1);
+biblioteca.agregarLibro(libro2);
+
+libro1.prestar();
+
+biblioteca.mostrarLibros();
