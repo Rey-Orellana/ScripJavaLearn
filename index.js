@@ -1,24 +1,26 @@
-class Estudiante {
-    constructor(nombre) {
-        this.nombre = nombre;
+class Vehiculo {
+
+    mover() {
+        console.log("El vehículo se mueve");
     }
 }
 
-class Universidad {
+class Automovil extends Vehiculo {
 
-    constructor(nombre) {
-        this.nombre = nombre;
-        this.estudiantes = [];
-    }
-
-    agregar(estudiante) {
-        this.estudiantes.push(estudiante);
+    conducir() {
+        console.log("Conduciendo automóvil");
     }
 }
 
-const u = new Universidad("UMSA");
+class Taxi extends Automovil {
 
-u.agregar(new Estudiante("María"));
-u.agregar(new Estudiante("Carlos"));
+    cobrar() {
+        console.log("Cobrando carrera");
+    }
+}
 
-console.log(u.estudiantes);
+const taxi = new Taxi();
+
+taxi.mover();
+taxi.conducir();
+taxi.cobrar();
