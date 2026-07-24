@@ -1,15 +1,29 @@
-class Persona {
+class Producto {
 
-    constructor(nombre, edad) {
+    constructor(nombre, precio) {
         this.nombre = nombre;
-        this.edad = edad;
-    }
-
-    toString() {
-        return `${this.nombre} (${this.edad})`;
+        this.precio = precio;
     }
 }
 
-const persona = new Persona("Laura", 22);
+class Carrito {
 
-console.log(persona.toString());
+    constructor() {
+        this.productos = [];
+    }
+
+    agregar(producto) {
+        this.productos.push(producto);
+    }
+
+    total() {
+        return this.productos.reduce((suma, p) => suma + p.precio, 0);
+    }
+}
+
+const carrito = new Carrito();
+
+carrito.agregar(new Producto("Mouse", 80));
+carrito.agregar(new Producto("Teclado", 150));
+
+console.log(carrito.total());
