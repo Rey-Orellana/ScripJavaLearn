@@ -1,15 +1,21 @@
 class Animal {
-    hablar() {
-        console.log("El animal hace un sonido.");
+    sonido() {
+        console.log("Sonido genérico");
     }
 }
 
-class Perro extends Animal {
-    ladrar() {
-        console.log("Guau Guau");
+class Gato extends Animal {
+    sonido() {
+        console.log("Miau");
     }
 }
 
-const perro = new Perro();
-perro.hablar();
-perro.ladrar();
+class Vaca extends Animal {
+    sonido() {
+        console.log("Muu");
+    }
+}
+
+const animales = [new Gato(), new Vaca()];
+
+animales.forEach(animal => animal.sonido());
