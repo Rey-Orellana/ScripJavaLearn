@@ -1,21 +1,20 @@
-class Animal {
-    sonido() {
-        console.log("Sonido genérico");
+class Figura {
+    calcularArea() {
+        throw new Error("Debe implementar calcularArea()");
     }
 }
 
-class Gato extends Animal {
-    sonido() {
-        console.log("Miau");
+class Rectangulo extends Figura {
+    constructor(base, altura) {
+        super();
+        this.base = base;
+        this.altura = altura;
+    }
+
+    calcularArea() {
+        return this.base * this.altura;
     }
 }
 
-class Vaca extends Animal {
-    sonido() {
-        console.log("Muu");
-    }
-}
-
-const animales = [new Gato(), new Vaca()];
-
-animales.forEach(animal => animal.sonido());
+const rect = new Rectangulo(5, 4);
+console.log(rect.calcularArea());
