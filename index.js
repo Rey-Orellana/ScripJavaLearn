@@ -1,19 +1,15 @@
-class Usuario {
+class Libro {
 
-    static total = 0;
-
-    constructor(nombre) {
-        this.nombre = nombre;
-        Usuario.total++;
+    constructor(titulo, autor) {
+        this.titulo = titulo;
+        this.autor = autor;
     }
 
-    static cantidadUsuarios() {
-        return Usuario.total;
+    informacion() {
+        return `${this.titulo} - ${this.autor}`;
     }
 }
 
-new Usuario("Ana");
-new Usuario("Luis");
-new Usuario("Carlos");
+const libro = new Libro("El Quijote", "Miguel de Cervantes");
 
-console.log(Usuario.cantidadUsuarios());
+console.log(libro.informacion());
