@@ -1,15 +1,23 @@
-class Empleado {
-    constructor(nombre, sueldo) {
-        this.nombre = nombre;
-        this.sueldo = sueldo;
+class Calculadora {
+
+    sumar(a, b) {
+        return a + b;
     }
 
-    aumentarSueldo(porcentaje) {
-        this.sueldo += this.sueldo * porcentaje / 100;
+    restar(a, b) {
+        return a - b;
+    }
+
+    multiplicar(a, b) {
+        return a * b;
+    }
+
+    dividir(a, b) {
+        return a / b;
     }
 }
 
-const e = new Empleado("Pedro", 5000);
-e.aumentarSueldo(10);
+const calc = new Calculadora();
 
-console.log(e);
+console.log(calc.sumar(8, 5));
+console.log(calc.multiplicar(6, 4));
