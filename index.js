@@ -1,19 +1,20 @@
-class Motor {
-    encender() {
-        console.log("Motor encendido");
+class Persona {
+    constructor(nombre) {
+        this.nombre = nombre;
     }
 }
 
-class Auto {
-    constructor() {
-        this.motor = new Motor();
+class Estudiante extends Persona {
+
+    constructor(nombre, carrera) {
+        super(nombre);
+        this.carrera = carrera;
     }
 
-    conducir() {
-        this.motor.encender();
-        console.log("El auto está en marcha");
+    mostrar() {
+        console.log(`${this.nombre} estudia ${this.carrera}`);
     }
 }
 
-const auto = new Auto();
-auto.conducir();
+const estudiante = new Estudiante("Ana", "Ingeniería");
+estudiante.mostrar();
