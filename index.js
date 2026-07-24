@@ -1,18 +1,15 @@
-class BaseDatos {
+class Persona {
+    constructor(nombre, edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
 
-    static instancia = null;
-
-    constructor() {
-        if (BaseDatos.instancia) {
-            return BaseDatos.instancia;
-        }
-
-        this.conexion = "Conectado";
-        BaseDatos.instancia = this;
+    esMayorQue(otraPersona) {
+        return this.edad > otraPersona.edad;
     }
 }
 
-const db1 = new BaseDatos();
-const db2 = new BaseDatos();
+const persona1 = new Persona("Juan", 30);
+const persona2 = new Persona("Pedro", 25);
 
-console.log(db1 === db2);
+console.log(persona1.esMayorQue(persona2)); // true
