@@ -1,15 +1,24 @@
-class Libro {
-
-    constructor(titulo, autor) {
-        this.titulo = titulo;
-        this.autor = autor;
-    }
-
-    informacion() {
-        return `${this.titulo} - ${this.autor}`;
+class Estudiante {
+    constructor(nombre) {
+        this.nombre = nombre;
     }
 }
 
-const libro = new Libro("El Quijote", "Miguel de Cervantes");
+class Universidad {
 
-console.log(libro.informacion());
+    constructor(nombre) {
+        this.nombre = nombre;
+        this.estudiantes = [];
+    }
+
+    agregar(estudiante) {
+        this.estudiantes.push(estudiante);
+    }
+}
+
+const u = new Universidad("UMSA");
+
+u.agregar(new Estudiante("María"));
+u.agregar(new Estudiante("Carlos"));
+
+console.log(u.estudiantes);
