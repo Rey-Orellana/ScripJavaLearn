@@ -1,23 +1,19 @@
-class Calculadora {
+class Usuario {
 
-    sumar(a, b) {
-        return a + b;
+    static total = 0;
+
+    constructor(nombre) {
+        this.nombre = nombre;
+        Usuario.total++;
     }
 
-    restar(a, b) {
-        return a - b;
-    }
-
-    multiplicar(a, b) {
-        return a * b;
-    }
-
-    dividir(a, b) {
-        return a / b;
+    static cantidadUsuarios() {
+        return Usuario.total;
     }
 }
 
-const calc = new Calculadora();
+new Usuario("Ana");
+new Usuario("Luis");
+new Usuario("Carlos");
 
-console.log(calc.sumar(8, 5));
-console.log(calc.multiplicar(6, 4));
+console.log(Usuario.cantidadUsuarios());
